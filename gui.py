@@ -202,11 +202,6 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
         Also set toolTips, objectNames, and other information of widgets.
 
         '''
-        # Modify the info widget to be a grid so that, when we add objects onto
-        # it, the columns will stay aligned
-        #
-        self.assignment_info_widget.expand_widget.setLayout(QtWidgets.QGridLayout())
-
         self.loaded_object_widget.setReadOnly(True)
         self.update_appearance()
 
@@ -243,16 +238,19 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
         for widget in six.itervalues(self.manager.directions):
             widget.clicked.connect(self.do_action)
 
-    def _add_info_line_widget(self, label, obj):
+    def _make_info_line_widget(self, label, obj):
         '''Create a widget that will display the direction and object info.'''
+        container = QtWidgets.QWidget()
+        container.setLayout(QtWidgets.QHBoxLayout())
+
         obj_widget = QtWidgets.QLineEdit()
         obj_widget.setText(self.controller.get_object_name(obj))
         obj_widget.setReadOnly(True)
 
-        layout = self.assignment_info_widget.expand_widget.layout()
-        row = layout.rowCount()
-        layout.addWidget(QtWidgets.QLabel(label), row, 0)
-        layout.addWidget(obj_widget, row, 1)
+        container.layout().addWidget(QtWidgets.QLabel(label))
+        container.layout().addWidget(obj_widget)
+
+        return container
 
     def has_loaded_object(self):
         '''bool: If this widget has an associated object.'''
@@ -280,13 +278,11 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
 
     def clear_info_widgets(self):
         expand_layout = self.assignment_info_widget.expand_widget.layout()
-
-        # TODO : Fix
-        # for index in reversed(six.moves.range(expand_layout.count())):
-        #     try:
-        #         expand_layout.itemAt(index).widget().deleteLater()
-        #     except AttributeError:
-        #         pass
+        for index in reversed(six.moves.range(expand_layout.count())):
+            try:
+                expand_layout.itemAt(index).widget().deleteLater()
+            except AttributeError:
+                pass
 
     def do_action(self):
         '''Do the associated action for the button that called this method.
@@ -339,7 +335,8 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
                 continue
 
             assigned_direction_object = info[key]
-            self._add_info_line_widget(key, assigned_direction_object)
+            self.assignment_info_widget.add_widget(
+                self._make_info_line_widget(key, assigned_direction_object))
 
         is_assignment_mode = self._current_mode == self.assignment_mode_label
 
