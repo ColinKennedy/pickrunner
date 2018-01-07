@@ -201,6 +201,8 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
         self.loaded_object_widget.setReadOnly(True)
         self.update_appearance()
 
+        self.setMinimumHeight(400)
+
         self.mode_button.setToolTip(textwrap.dedent(
             '''
             Click to change Pickrunner's modes
