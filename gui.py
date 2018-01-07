@@ -215,6 +215,17 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
             this relationship in advance.
 
             '''))
+        self.mode_button.setStyleSheet(
+            '''
+            QPushButton[mode=selection] {
+                background-color: rgb(65, 130, 130);
+            }
+            QPushButton[mode=assignment] {
+                background-color: rgb(178, 75, 255);
+            }
+            '''
+        )
+        self.mode_button.setProperty('mode', 'selection')
 
         self.setStyleSheet(
             '''
@@ -268,6 +279,7 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
         return self.loaded_object is not None
 
     def set_loaded_object(self, obj):
+        '''Change the loaded object to the given object.'''
         self.loaded_object = obj
         self.update_appearance()
 
@@ -330,7 +342,22 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
     def toggle_mode(self):
         '''Change from Selection Mode to Assignment Mode or vice-versa.'''
         index_for_the_new_mode = 1 - self.mode_options.index(self._current_mode)
-        self.set_mode(self.mode_options[index_for_the_new_mode])
+        mode_label = self.mode_options[index_for_the_new_mode]
+        self.set_mode(mode_label)
+
+        modes = {
+            self.selection_mode_label: 'selection',
+            self.assignment_mode_label: 'assignment',
+        }
+
+        try:
+            mode_property = modes[mode_label]
+        except KeyError:
+            mode_property = ''
+
+        self.mode_button.setProperty('mode', mode_property)
+        self.mode_button.style().unpolish(self.mode_button)
+        self.mode_button.style().polish(self.mode_button)
 
     def update_appearance(self):
         '''Set the GUI's widget colors and options based on our stored info.'''
