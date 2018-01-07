@@ -70,6 +70,7 @@ class MayaBehaviorControl(gui.BehaviorControl):
 
     @classmethod
     def get_settings(cls, node):
+        '''dict[str]: Get the settings for the given node, if any.'''
         known_exceptions = (
             # If the node isn't a PyMEL node
             AttributeError,
@@ -147,9 +148,9 @@ class MayaBehaviorControl(gui.BehaviorControl):
 
         pm.select(node)
 
+        return node
 
-# TODO : Make a scriptJob. If the user deletes the loaded object, update the
-#        GUI
+
 class PickrunnerMayaWindow(gui.AssignmentManagerWidget):
 
     '''A GUI implementation of Pickrunner, for Maya.'''
@@ -166,13 +167,31 @@ class PickrunnerMayaWindow(gui.AssignmentManagerWidget):
             controller=MayaBehaviorControl(),
             parent=parent)
 
-#         selection = self.controller.get_selection()
-#         if selection:
-#             self.set_loaded_object(selection[0])
+        # Whenever the user changes selection, try to update the GUI
+        self.jobs = []
+
+        selection_job_id = pm.scriptJob(
+            event=['SelectionChanged', self.update_appearance])
+        new_scene_job_id = pm.scriptJob(
+            event=['deleteAll', self.update_appearance])
+        self.jobs.append(selection_job_id)
+        self.jobs.append(new_scene_job_id)
+
+        selection = self.controller.get_selection()
+        if selection:
+            self.set_loaded_object(selection[0])
 
     def init_default_settings(self):
+        '''Set the window size to be larger, by default.'''
         super(PickrunnerMayaWindow, self).init_default_settings()
-        self.resize(600, 600)
+        self.resize(600, 300)
+
+    def closeEvent(self, event):
+        '''When the window is closed, stop trying to update the GUI.'''
+        for job_id in self.jobs:
+            pm.scriptJob(kill=job_id)
+
+        super(PickrunnerMayaWindow, self).closeEvent(event)
 
 
 def get_uuid(node):
@@ -186,6 +205,26 @@ def get_uuid(node):
         return cmds.ls(node, uuid=True)[0]
     except IndexError:
         return ''
+
+
+def do_pickrun_motion(direction):
+    '''Try to pickrun in a given direction. Otherwise, pickWalk.
+
+    Args:
+        direction (str):
+            The direction to walk. Options are: ("up", "down", "left", "right").
+
+    '''
+    try:
+        node = pm.selected()[-1]
+    except IndexError:
+        pm.pickWalk(direction=direction)
+        return
+
+    new_node = MayaBehaviorControl.do_motion(direction, node)
+    if not new_node:
+        # Pickrun failed for some reason so lets pickWalk, instead
+        pm.pickWalk(direction=direction)
 
 
 @mui.delete_ui_if_exists(WINDOW_TITLE)
