@@ -95,7 +95,11 @@ class MayaBehaviorControl(gui.BehaviorControl):
     def get_object_name(cls, obj):
         '''str: Find the unique-name of the given object.'''
         if isinstance(obj, six.string_types):
-            obj = pm.ls(obj)[0]
+            try:
+                obj = pm.ls(obj)[0]
+            except IndexError:
+                return obj
+
         return obj.nodeName()
 
     @classmethod

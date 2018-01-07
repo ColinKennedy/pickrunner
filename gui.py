@@ -15,7 +15,6 @@ import abc
 # IMPORT THIRD-PARTY LIBRARIES
 from qt.widgets import visibility_widget
 from Qt import QtWidgets
-from Qt import QtGui
 import six
 
 
@@ -165,6 +164,9 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
             parent (:obj:`<QtCore.QObject>`, optional):
                 Qt-based associated object. Default is None.
 
+        Raises:
+            RuntimeError: If the up-arrow button doesn't exist.
+
         '''
         super(AssignmentManagerWidget, self).__init__(parent=parent)
         self.controller = controller
@@ -173,8 +175,10 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
 
         self.setLayout(QtWidgets.QVBoxLayout())
 
+        self.autopair_check_box = QtWidgets.QCheckBox('Auto-Pair')
         self.mode_button = QtWidgets.QPushButton(self.selection_mode_label)
         self.loaded_object_widget = QtWidgets.QLineEdit()
+        self.loaded_object_label = QtWidgets.QLabel('Loaded object:')
 
         self.manager = DirectionPad()
         self.assignment_info_widget = visibility_widget.ExpandCollapseWidget('Assignment Info')
@@ -183,11 +187,19 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
         self.layout().addStretch(1)
         self.load_widget = QtWidgets.QWidget()
         self.load_widget.setLayout(QtWidgets.QHBoxLayout())
-        self.load_widget.layout().addWidget(QtWidgets.QLabel('Loaded object:'))
+        self.load_widget.layout().addWidget(self.loaded_object_label)
         self.load_widget.layout().addWidget(self.loaded_object_widget)
         self.layout().addWidget(self.load_widget)
         self.layout().addWidget(self.manager)
         self.layout().addWidget(self.assignment_info_widget)
+
+        # Put the "Auto-Pair" checkbox widget next to the up-direction button
+        index = self.manager.direction_layout.indexOf(self.manager.directions['up'])
+        if index == -1:
+            raise RuntimeError('No up arrow widget could be found')
+
+        row, column, _, _ = self.manager.direction_layout.getItemPosition(index)
+        self.manager.direction_layout.addWidget(self.autopair_check_box, row, column + 1)
 
         self.init_default_settings()
         self.init_interactive_settings()
@@ -199,9 +211,19 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
 
         '''
         self.loaded_object_widget.setReadOnly(True)
+        self.autopair_check_box.setChecked(True)
         self.update_appearance()
 
         self.setMinimumHeight(400)
+
+        self.autopair_check_box.setToolTip(
+            'If disabled, connects are only 1-way. But if enabled, connecting an '
+            'objects will be connected 2-ways, by default.')
+
+        load_tooltip = 'Select an object and then click load selection to load it'
+        self.loaded_object_widget.setToolTip(load_tooltip)
+        self.manager.main_widget.setToolTip(load_tooltip)
+        self.loaded_object_label.setToolTip(load_tooltip)
 
         self.mode_button.setToolTip(textwrap.dedent(
             '''
@@ -258,6 +280,9 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
         self.mode_button.clicked.connect(self.toggle_mode)
 
         for widget in six.itervalues(self.manager.directions):
+            if self.is_load_selection_widget(widget):
+                continue
+
             widget.clicked.connect(self.do_action)
 
     def _make_info_line_widget(self, label, obj):
@@ -273,6 +298,17 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
         container.layout().addWidget(obj_widget)
 
         return container
+
+    def is_load_selection_widget(self, widget):
+        '''bool: If the given widget is the "Load Selection" widget.'''
+        if widget == self.manager.main_widget.objectName():
+            return True
+
+        return widget == self.manager.main_widget
+
+    def is_pairing_enabled(self):
+        '''bool: If the user wants to make assignments reflective.'''
+        return self.autopair_check_box.isChecked()
 
     def has_loaded_object(self):
         '''bool: If this widget has an associated object.'''
@@ -300,6 +336,7 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
         self.update_appearance()
 
     def clear_info_widgets(self):
+        '''Delete all of the info widgets in the GUI.'''
         expand_layout = self.assignment_info_widget.expand_widget.layout()
         for index in reversed(six.moves.range(expand_layout.count())):
             try:
@@ -335,7 +372,15 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
         except IndexError:
             pass
         else:
+            opposite_directions = {
+                'up': 'down',
+                'down': 'up',
+                'left': 'right',
+                'right': 'left',
+            }
             self.controller.assign(self.loaded_object, direction, driven_object)
+            if self.is_pairing_enabled():
+                self.controller.assign(driven_object, opposite_directions[direction], self.loaded_object)
 
         self.update_appearance()
 
@@ -380,7 +425,7 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
         info = self.controller.get_settings(reference_object)
 
         for key in sorted(six.iterkeys(info)):
-            if key == self.manager.main_widget.objectName():
+            if self.is_load_selection_widget(key):
                 continue
 
             assigned_direction_object = info[key]
@@ -394,6 +439,7 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
                 self.controller.get_object_name(reference_object))
 
         self.load_widget.setVisible(is_assignment_mode)
+        self.autopair_check_box.setVisible(is_assignment_mode)
         self.manager.main_widget.setEnabled(is_assignment_mode)
         self.manager.main_widget.setVisible(is_assignment_mode)
 
