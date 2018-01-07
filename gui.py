@@ -8,8 +8,6 @@ DCC environments, such as Maya, and a GUI that the controller can be used for.
 
 '''
 
-
-# TODO : Replace palettes with properties and stylesheets
 # IMPORT STANDARD LIBRARIES
 import textwrap
 import abc
@@ -169,8 +167,8 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
 
         '''
         super(AssignmentManagerWidget, self).__init__(parent=parent)
-        self.loaded_object = None
         self.controller = controller
+        self.loaded_object = None
         self._current_mode = self.selection_mode_label
 
         self.setLayout(QtWidgets.QVBoxLayout())
@@ -239,7 +237,7 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
             try:
                 obj = self.controller.get_selection()[-1]
             except IndexError:
-                return
+                obj = None
 
             self.set_loaded_object(obj)
 
@@ -306,24 +304,24 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
             RuntimeError: If this method was not called from a Qt widget.
 
         '''
-        if not self.has_loaded_object():
-            return
-
-        self.sender()
         try:
             direction = self.sender().objectName()
         except AttributeError:
             raise RuntimeError('do_action must be called from a Qt-signal')
 
         if self._current_mode == self.selection_mode_label:
-            self.controller.do_motion(direction, self.loaded_object)
+            self.controller.do_motion(direction, self.controller.get_selection()[-1])
             return
 
         # Add the selected object as the "object to jump to" for our loaded
         # object + the given direction
         #
-        driven_object = self.controller.get_selection()[-1]
-        self.controller.assign(self.loaded_object, direction, driven_object)
+        try:
+            driven_object = self.controller.get_selection()[-1]
+        except IndexError:
+            pass
+        else:
+            self.controller.assign(self.loaded_object, direction, driven_object)
 
         self.update_appearance()
 
