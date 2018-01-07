@@ -86,7 +86,7 @@ class MayaBehaviorControl(gui.BehaviorControl):
 
         try:
             value = json.loads(node.attr(cls.reserved_attribute_name).get())
-        except known_exceptions:
+        except known_exceptions:  # pylint: disable=E0712
             return dict()
 
         return value
