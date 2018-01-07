@@ -151,8 +151,6 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
 
     '''
 
-    object_loaded_color = QtGui.QColor(0, 255, 0)
-    nothing_loaded_color = QtGui.QColor(255, 255, 0)
     selection_mode_label = 'Selection Mode'
     assignment_mode_label = 'Assignment Mode'
     mode_options = (selection_mode_label, assignment_mode_label)
@@ -217,6 +215,19 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
             this relationship in advance.
 
             '''))
+
+        self.setStyleSheet(
+            '''
+            QPushButton[status="okay"] {
+                background-color: rgb(0, 120, 0);
+            }
+
+            QPushButton[status="not_okay"] {
+                background-color: rgb(200, 200, 0);
+                color: black;
+            }
+            '''
+        )
         self.mode_button.setObjectName('mode_button')
         self.manager.setObjectName('manager_widget')
         self.assignment_info_widget.setObjectName('info_widget')
@@ -323,12 +334,23 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
 
     def update_appearance(self):
         '''Set the GUI's widget colors and options based on our stored info.'''
-        self.loaded_object_widget.setText('<NO OBJECT FOUND>')
+        self.loaded_object_widget.setText(
+            'Click "{label}"'.format(label=self.manager.main_widget.text()))
 
         # Repopulate the assignment details for the loaded object
         self.clear_info_widgets()
 
-        info = self.controller.get_settings(self.loaded_object)
+        reference_object = None
+
+        if self._current_mode == self.assignment_mode_label:
+            reference_object = self.loaded_object
+        elif self._current_mode == self.selection_mode_label:
+            try:
+                reference_object = self.controller.get_selection()[-1]
+            except IndexError:
+                pass
+
+        info = self.controller.get_settings(reference_object)
 
         for key in sorted(six.iterkeys(info)):
             if key == self.manager.main_widget.objectName():
@@ -342,17 +364,18 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
 
         if is_assignment_mode and self.has_loaded_object():
             self.loaded_object_widget.setText(
-                self.controller.get_object_name(self.loaded_object))
+                self.controller.get_object_name(reference_object))
 
         self.load_widget.setVisible(is_assignment_mode)
         self.manager.main_widget.setEnabled(is_assignment_mode)
         self.manager.main_widget.setVisible(is_assignment_mode)
 
-        if not is_assignment_mode:
-            self.manager.main_widget.setPalette(QtGui.QColor(100, 100, 100))
-        elif not self.has_loaded_object():
-            self.manager.main_widget.setPalette(self.nothing_loaded_color)
+        if is_assignment_mode and self.has_loaded_object():
+            self.manager.main_widget.setProperty('status', 'okay')
         else:
-            self.manager.main_widget.setPalette(self.object_loaded_color)
+            self.manager.main_widget.setProperty('status', 'not_okay')
+
+        self.manager.main_widget.style().unpolish(self.manager.main_widget)
+        self.manager.main_widget.style().polish(self.manager.main_widget)
 
         self.mode_button.setText(self._current_mode)
