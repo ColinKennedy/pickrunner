@@ -361,7 +361,12 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
             raise RuntimeError('do_action must be called from a Qt-signal')
 
         if self._current_mode == self.selection_mode_label:
-            self.controller.do_motion(direction, self.controller.get_selection()[-1])
+            try:
+                selected = self.controller.get_selection()[-1]
+            except IndexError:
+                return
+
+            self.controller.do_motion(direction, selected)
             return
 
         # Add the selected object as the "object to jump to" for our loaded

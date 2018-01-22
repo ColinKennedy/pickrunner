@@ -20,38 +20,31 @@ def override_pickwalk():
     just pickWalk instead.
 
     '''
-    def _override_hotkey(direction):
-        '''Force the direction key .
+    command = pm.nameCommand(
+        'pickrunner_Up',
+        command='python("from pickrunner import mayarunner;mayarunner.do_pickrun_motion(\'up\')")',
+        annotation='Use Pickrunner to go up')
+    pm.hotkey(keyShortcut='Up', name=command)
 
-        Args:
-            direction (str):
-                The key/direction to override.
-                Options: ["Up", "Down", "Left", "Right"].
+    command = pm.nameCommand(
+        'pickrunner_Down',
+        command='python("from pickrunner import mayarunner;mayarunner.do_pickrun_motion(\'down\')")',
+        annotation='Use Pickrunner to go down')
+    pm.hotkey(keyShortcut='Down', name=command)
 
-        '''
-        # Clear the existing hotket
-        pm.hotkey(keyShortcut=direction, name='')
+    command = pm.nameCommand(
+        'pickrunner_Left',
+        command='python("from pickrunner import mayarunner;mayarunner.do_pickrun_motion(\'left\')")',
+        annotation='Use Pickrunner to go left')
+    pm.hotkey(keyShortcut='Left', name=command)
 
-        # Construct the new hotkey
-        command_name = 'pickrun_{direction}'.format(direction=direction)
-        annotation = 'Try to use Pickrunner to move "{direction}"'
+    command = pm.nameCommand(
+        'pickrunner_Right',
+        command='python("from pickrunner import mayarunner;mayarunner.do_pickrun_motion(\'right\')")',
+        annotation='Use Pickrunner to go right')
+    pm.hotkey(keyShortcut='Right', name=command)
 
-        # nameCommand requires MEL so we have to use MEL to call Python
-        command = textwrap.dedent(
-            '''
-            from pickrunner import mayarunner
-            mayarunner.do_pickrun_motion("{direction}")
-            '''
-        ).format(direction=direction.lower())
-        command = ';'.join(command.split('\n'))
-        command = 'python("{command}")'.format(command=command)
 
-        # Make the command + hotkey with the new command
-        pm.nameCommand(command_name, annotation=annotation, command=command)
-        pm.hotkey(keyShortcut=direction, name=command_name)
-
-    for direction in ["Up", "Down", "Left", "Right"]:
-        _override_hotkey(direction)
 
 
 def main():
