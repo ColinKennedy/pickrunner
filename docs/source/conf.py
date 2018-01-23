@@ -175,4 +175,6 @@ autodoc_mock_imports = [
     'pymel',
     'shiboken',
     'shiboken2',
+    'PySide',
+    'Qt',
 ]

@@ -9,9 +9,8 @@ Jinja2==2.10
 MarkupSafe==1.0
 pockets==0.5.1
 Pygments==2.2.0
-PySide==1.2.4
 pytz==2017.3
-Qt.py==1.0.0
+reel==0.1.0
 requests==2.18.4
 six==1.11.0
 snowballstemmer==1.2.1
@@ -21,3 +20,4 @@ sphinxcontrib-napoleon==0.6.1
 sphinxcontrib-websupport==1.0.1
 typing==3.6.2
 urllib3==1.22
+ways==0.1.0b1
