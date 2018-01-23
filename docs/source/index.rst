@@ -29,7 +29,7 @@ If you installed Pickrunner through the "pickrunner.mod" file, you should
 already have a new shelf called "Pickrunner" on-startup. Just click the
 Pickrunner GUI button.
 
-.. figure:: /../icons/pickrunner_icon.png
+.. figure:: _static/pickrunner_icon.png
 
 This button will load the Pickrunner GUI, which comes in two modes,
 :ref:`assignmentmode` and :ref:`selectionmode`.
