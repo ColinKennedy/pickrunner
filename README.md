@@ -15,18 +15,15 @@ Pickrunner data assigned to it, the tool will just use pickWalk, instead. That
 way, even if Pickrunner is only partially implemented in a scene, it won't
 interrupt the artist's process.
 
-
-TODO highlight the URL
-For the latest documentation, head over to pickrunner.readthedocs.io
+For the latest documentation, head over to <https://pickrunner.readthedocs.io>
 
 Installing By Module
 --------------------
 
 Download the pickrunner project from online.
 
-..
 
-    git clone https://github.com/ColinKennedy/pickrunner.git
+    git clone <https://github.com/ColinKennedy/pickrunner.git>
 
 
 Pickrunner comes with a module file located in the "modules" folder called
@@ -54,7 +51,6 @@ If you don't want to use the module file, no problem. Just do this:
    - Only do this if you want to use the Pickrunner icon(s)
 4. Add these commands to a new shelf button
 
-..
 
     from pickrunner import mayarunner
     mayarunner.show()
@@ -78,7 +74,6 @@ This button will load the Pickrunner GUI, which comes in two modes,
 TODO: Make screenshot of the GUI in both modes
 
 
-.. _assignmentmode :
 
 Assignment Mode
 +++++++++++++++
@@ -108,8 +103,6 @@ should be able to press up/down/left/right to move between objects or use
 Pickrunner's "Selection Mode".
 
 
-.. _selectionmode :
-
 Selection Mode
 ++++++++++++++
 
@@ -136,9 +129,7 @@ Final Notes
 If you're looking to contribute or would like the source, please check out
 this page, first.
 
-.. toctree::
-    :maxdepth: 2
-    :caption: Developer Guide
 
-    Documentation And API Reference <developer>
+TODO make page!
 
+For the latest documentation, head over to pickrunner.readthedocs.io
