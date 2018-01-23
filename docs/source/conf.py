@@ -169,4 +169,4 @@ texinfo_documents = [
 ]
 
 
-
+html_theme = 'sphinx_rtd_theme'

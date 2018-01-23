@@ -16,11 +16,12 @@ Building The Documentation
 
 Here are the steps to rebuild this documentation:
 
-1. Make sure that the scripts folder is visible in the PYTHONPATH
-2. Run "make html" while cd'ed into docs, or make.bat if you're on Windows
-2b. Alternatively, run sphinx-build -b html docs/source docs/build
-3. If new Python modules are added, make sure to rebuild their pages, using
-    docs/regenerate.sh or docs/regenerate.bat if you're on Windows.
+1. Make sure that the scripts folder is visible in the :obj:`PYTHONPATH`.
+2. Run :obj:`make html` while cd'ed into the :obj:`docs` folder,
+   or make.bat if you're on Windows
+3. Alternatively, run :obj:`sphinx-build -b html docs/source docs/build`
+4. If new Python modules are added, make sure to rebuild their pages, using
+   :obj:`docs/regenerate.sh` or :obj:`docs/regenerate.bat` if you're on Windows.
 
 
 Python Documentation

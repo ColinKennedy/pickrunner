@@ -17,6 +17,7 @@ interrupt the artist's process.
 
 
 .. toctree::
+    :caption: User Guide
 
     Installation <installation>
 
