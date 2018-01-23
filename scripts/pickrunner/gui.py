@@ -9,13 +9,12 @@ DCC environments, such as Maya, and a GUI that the controller can be used for.
 '''
 
 # IMPORT STANDARD LIBRARIES
-import textwrap
 import abc
+import textwrap
 
 # IMPORT THIRD-PARTY LIBRARIES
-from qt.widgets import visibility_widget
 from Qt import QtWidgets
-import six
+from qt.widgets import visibility_widget
 
 
 class DirectionPad(QtWidgets.QWidget):
@@ -279,7 +278,7 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
         self.manager.main_widget.clicked.connect(load_selection)
         self.mode_button.clicked.connect(self.toggle_mode)
 
-        for widget in six.itervalues(self.manager.directions):
+        for widget in self.manager.directions.values():
             if self.is_load_selection_widget(widget):
                 continue
 
@@ -338,7 +337,7 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
     def clear_info_widgets(self):
         '''Delete all of the info widgets in the GUI.'''
         expand_layout = self.assignment_info_widget.expand_widget.layout()
-        for index in reversed(six.moves.range(expand_layout.count())):
+        for index in reversed(range(expand_layout.count())):
             try:
                 expand_layout.itemAt(index).widget().deleteLater()
             except AttributeError:
@@ -432,7 +431,7 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
 
         info = self.controller.get_settings(reference_object)
 
-        for key in sorted(six.iterkeys(info)):
+        for key in sorted(info.keys()):
             if self.is_load_selection_widget(key):
                 continue
 

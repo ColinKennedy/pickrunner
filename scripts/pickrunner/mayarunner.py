@@ -20,15 +20,13 @@ Take that, pickWalk!
 import json
 
 # IMPORT THIRD-PARTY LIBRARIES
-from mayatk import mui
 from Qt import QtCore
 from maya import cmds
+from mayatk import mui
 import pymel.core as pm
-import six
 
 # IMPORT LOCAL LIBRARIES
 from . import gui
-
 
 WINDOW_TITLE = 'Pickrunner'
 
@@ -94,11 +92,15 @@ class MayaBehaviorControl(gui.BehaviorControl):
     @classmethod
     def get_object_name(cls, obj):
         '''str: Find the unique-name of the given object.'''
-        if isinstance(obj, six.string_types):
-            try:
-                obj = pm.ls(obj)[0]
-            except IndexError:
-                return obj
+        try:
+            return obj.nodeName()
+        except AttributeError:
+            pass
+
+        try:
+            obj = pm.ls(obj)[0]
+        except IndexError:
+            return obj
 
         return obj.nodeName()
 
