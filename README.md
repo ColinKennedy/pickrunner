@@ -17,8 +17,8 @@ interrupt the artist's process.
 
 For the latest documentation, head over to <https://pickrunner.readthedocs.io>
 
-Installing By Module
---------------------
+
+### Installing By Module
 
 Download the pickrunner project from online.
 
@@ -37,8 +37,8 @@ you need to place the "pickrunner.mod" file someplace else, just make sure to
 replace the relative path "..\" and "../" to wherever you place the other
 files.
 
-Installing Manually
--------------------
+
+### Installing Manually
 
 If you don't want to use the module file, no problem. Just do this:
 
@@ -58,9 +58,7 @@ If you don't want to use the module file, no problem. Just do this:
 And you're done.
 
 
-
-Scene Setup
------------
+## Scene Setup
 
 If you installed Pickrunner through the "pickrunner.mod" file, you should
 already have a new shelf called "Pickrunner" on-startup. Just click the
@@ -74,9 +72,7 @@ This button will load the Pickrunner GUI, which comes in two modes,
 TODO: Make screenshot of the GUI in both modes
 
 
-
-Assignment Mode
-+++++++++++++++
+### Assignment Mode
 
 This is the default mode that you'll see when you open the Pickrunner GUI.
 Assignment Mode is exactly as it sounds like. It's the mode that lets you set
@@ -91,11 +87,14 @@ is now being editted by Pickrunner.
 Select another object, for example objectB, and click any of the up, down, left,
 or right buttons.
 
-.. note ::
-    If you've got "Auto-Pair" enabled, Pickrunner will reflect objects.
-    So when you assign objectB as the "left" direction to objectA, "Auto-Pair"
-    will also set objectA as the "right" direction to objectB.
-    It's just a timesaver. Turn it off if you don't want it to do that.
+---
+
+If you've got "Auto-Pair" enabled, Pickrunner will reflect objects.
+So when you assign objectB as the "left" direction to objectA, "Auto-Pair"
+will also set objectA as the "right" direction to objectB.
+It's just a timesaver. Turn it off if you don't want it to do that.
+
+---
 
 Assuming you've done all of the connections you wanted, you're ready to start
 using Pickrunner. If you have the direction hotkeys set up correctly, you
@@ -103,16 +102,14 @@ should be able to press up/down/left/right to move between objects or use
 Pickrunner's "Selection Mode".
 
 
-Selection Mode
-++++++++++++++
+### Selection Mode
 
 This is a good mode to test your Pickrunner connections with. Select objects in
 the scene that have Pickrunner data and press the direction keys. Your
 selection should move from object to object.
 
 
-Drawback To Pickrunner
-----------------------
+## Drawback To Pickrunner
 
 Pickrunner is implemented using node UUIDs, which means you can go from any
 node to any node, even if the nodes are shading nodes (DG nodes).
@@ -123,8 +120,7 @@ import them into another scene, Pickrunner won't work. Referencing your nodes
 will still work though, and in practice that's usually good enough.
 
 
-Final Notes
------------
+## Final Notes
 
 If you're looking to contribute or would like the source, please check out
 this page, first.
