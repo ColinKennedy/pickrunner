@@ -34,7 +34,7 @@ Pickrunner GUI button.
 This button will load the Pickrunner GUI, which comes in two modes,
 :ref:`assignmentmode` and :ref:`selectionmode`.
 
-TODO: Make screenshot of the GUI in both modes
+.. figure:: _static/pickrunner_screenshot.jpg
 
 
 .. _assignmentmode :

@@ -64,14 +64,13 @@ If you installed Pickrunner through the "pickrunner.mod" file, you should
 already have a new shelf called "Pickrunner" on-startup. Just click the
 Pickrunner GUI button.
 
-!(https://raw.githubusercontent.com/ColinKennedy/pickrunner/second_pass/docs/source/_static/pickrunner_icon.png)
+![alt text](https://raw.githubusercontent.com/ColinKennedy/pickrunner/second_pass/docs/source/_static/pickrunner_icon.png)
 
 
 This button will load the Pickrunner GUI, which comes in two modes,
 Assignment Mode and Selection Mode.
 
-!()
-TODO: Make screenshot of the GUI in both modes
+![alt text](https://raw.githubusercontent.com/ColinKennedy/pickrunner/second_pass/docs/source/_static/pickrunner_screenshot.jpg)
 
 
 ### Assignment Mode
