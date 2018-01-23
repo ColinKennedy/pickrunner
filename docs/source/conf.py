@@ -170,3 +170,9 @@ texinfo_documents = [
 
 
 html_theme = 'sphinx_rtd_theme'
+autodoc_mock_imports = [
+    'maya',
+    'pymel',
+    'shiboken',
+    'shiboken2',
+]

@@ -2,6 +2,11 @@
 #
 
 # You can set these variables from the command line.
+export PYTHONPATH := $(realpath ../scripts):$$PYTHONPATH
+
+all:
+	@echo $(value PYTHONPATH)
+
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 SPHINXPROJ    = Pickrunner

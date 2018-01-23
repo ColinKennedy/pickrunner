@@ -4,11 +4,15 @@ API Documentation
 Setting Up For Development
 --------------------------
 
-Make sure to grab the requirements.txt file located in
-docs/requirements.txt
+Make sure to grab the requirements.txt file before trying to build the docs
 
+.. code-block :: bash
 
-TODO write the command here
+    pip -r docs/requirements.txt
+
+There are some modules used by Pickrunner that are not mentioned in the
+requirements.txt file. Namely shiboken, pymel, and maya.cmds. All of these are
+provided by Maya so we just ignore them for building documentation.
 
 
 Building The Documentation
