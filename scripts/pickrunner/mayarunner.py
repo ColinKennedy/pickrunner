@@ -190,6 +190,7 @@ class PickrunnerMayaWindow(gui.AssignmentManagerWidget):
     def init_default_settings(self):
         '''Set the window size to be larger, by default.'''
         super(PickrunnerMayaWindow, self).init_default_settings()
+        self.toggle_mode()  # Place into "Assignment Mode" by default
         self.resize(320, 100)
 
     def closeEvent(self, event):
