@@ -45,28 +45,28 @@ class DirectionPad(QtWidgets.QWidget):
         self.main_widget = QtWidgets.QPushButton('Load selection')
         self.direction_layout = QtWidgets.QGridLayout()
 
-        left = QtWidgets.QPushButton('Left')
-        right = QtWidgets.QPushButton('Right')
-        up = QtWidgets.QPushButton('Up')
-        down = QtWidgets.QPushButton('Down')
+        left_button = QtWidgets.QPushButton('Left')
+        right_button = QtWidgets.QPushButton('Right')
+        up_button = QtWidgets.QPushButton('Up')
+        down_button = QtWidgets.QPushButton('Down')
 
         widgets = [
             ('center', self.main_widget),
-            ('left', left),
-            ('right', right),
-            ('up', up),
-            ('down', down),
+            ('left', left_button),
+            ('right', right_button),
+            ('up', up_button),
+            ('down', down_button),
         ]
 
         for storage_name, widget in widgets:
             self.directions[storage_name] = widget
             widget.setObjectName(storage_name)
 
-        self.direction_layout.addWidget(up, 0, 1)
-        self.direction_layout.addWidget(left, 1, 0)
+        self.direction_layout.addWidget(up_button, 0, 1)
+        self.direction_layout.addWidget(left_button, 1, 0)
         self.direction_layout.addWidget(self.main_widget, 1, 1)
-        self.direction_layout.addWidget(right, 1, 2)
-        self.direction_layout.addWidget(down, 2, 1)
+        self.direction_layout.addWidget(right_button, 1, 2)
+        self.direction_layout.addWidget(down_button, 2, 1)
 
         self.layout().addLayout(self.direction_layout)
 
@@ -385,7 +385,10 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
             }
             self.controller.assign(self.loaded_object, direction, driven_object)
             if self.is_pairing_enabled():
-                self.controller.assign(driven_object, opposite_directions[direction], self.loaded_object)
+                self.controller.assign(
+                        driven_object,
+                        opposite_directions[direction],
+                        self.loaded_object)
 
         self.update_appearance()
 
