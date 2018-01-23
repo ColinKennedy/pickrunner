@@ -190,7 +190,7 @@ class PickrunnerMayaWindow(gui.AssignmentManagerWidget):
     def init_default_settings(self):
         '''Set the window size to be larger, by default.'''
         super(PickrunnerMayaWindow, self).init_default_settings()
-        self.resize(600, 300)
+        self.resize(320, 100)
 
     def closeEvent(self, event):
         '''When the window is closed, stop trying to update the GUI.'''

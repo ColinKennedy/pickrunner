@@ -215,7 +215,7 @@ class AssignmentManagerWidget(QtWidgets.QWidget):
         self.autopair_check_box.setChecked(True)
         self.update_appearance()
 
-        self.setMinimumHeight(400)
+        self.setMinimumHeight(270)
 
         self.autopair_check_box.setToolTip(
             'If disabled, connects are only 1-way. But if enabled, connecting an '
