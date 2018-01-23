@@ -22,11 +22,11 @@ import json
 # IMPORT THIRD-PARTY LIBRARIES
 from Qt import QtCore
 from maya import cmds
-from mayatk import mui
 import pymel.core as pm
 
 # IMPORT LOCAL LIBRARIES
 from . import gui
+from . import mui
 
 WINDOW_TITLE = 'Pickrunner'
 

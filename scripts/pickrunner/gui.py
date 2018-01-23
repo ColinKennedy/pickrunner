@@ -14,7 +14,9 @@ import textwrap
 
 # IMPORT THIRD-PARTY LIBRARIES
 from Qt import QtWidgets
-from qt.widgets import visibility_widget
+
+# IMPORT LOCAL LIBRARIES
+from . import visibility_widget
 
 
 class DirectionPad(QtWidgets.QWidget):
