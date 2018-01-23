@@ -132,5 +132,6 @@ Developer Notes
 ---------------
 
 .. toctree
+    :maxdepth: 2
 
-    API Documentation <api>
+    Developer Guide <developer>
