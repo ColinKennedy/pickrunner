@@ -124,9 +124,6 @@ will still work though, and in practice that's usually good enough.
 ## Final Notes
 
 If you're looking to contribute or would like the source, please check out
-this page, first.
+these pages, first.
 
-
-TODO make page!
-
-For the latest documentation, head over to pickrunner.readthedocs.io
+<https://pickrunner.readthedocs.io>
