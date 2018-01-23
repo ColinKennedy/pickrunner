@@ -1,6 +1,7 @@
 Pickrunner - The New Maya pickWalk Tool
 =======================================
 
+
 Maya's pickWalk tool is okay, but it doesn't work well for many common scenarios.
 In particular, pickWalking is useless for rigs, because rig controllers are
 rarely grouped so that a user can move between them easily.
@@ -15,50 +16,9 @@ way, even if Pickrunner is only partially implemented in a scene, it won't
 interrupt the artist's process.
 
 
-Installation
-------------
+.. toctree::
 
-Installing By Module
-++++++++++++++++++++
-
-Download the pickrunner project from online.
-
-..
-
-    git clone https://github.com/ColinKennedy/pickrunner.git
-
-
-Pickrunner comes with a module file located in the "modules" folder called
-"pickrunner.mod". Just add the full path to the "modules" folder to the
-MAYA_MODULE_PATH environment variable and restart Maya.
-
-Pickrunner will build a brand new shelf for you to use its GUI.
-
-The paths listed in "pickrunner.mod" are all relative to the main folder so, if
-you need to place the "pickrunner.mod" file someplace else, just make sure to
-replace the relative path "..\" and "../" to wherever you place the other
-files.
-
-Installing Manually
-+++++++++++++++++++
-
-If you don't want to use the module file, no problem. Just do this:
-
-1. Put the "pickrunner" folder located in "scripts/pickrunner" someplace on the
-   MAYA_SCRIPT_PATH
-   - This makes it so that the Pickrunner GUI will load
-2. Add the directory to the "userSetup.py" file onto your MAYA_SCRIPT_PATH
-   - This step will override your hotkeys on Maya's startup
-3. Place the "pickrunner_icon.png" in the XBMLANGPATH environment variable
-   - Only do this if you want to use the Pickrunner icon(s)
-4. Add these commands to a new shelf button
-
-..
-
-    from pickrunner import mayarunner
-    mayarunner.show()
-
-And you're done.
+    Installation <installation>
 
 
 Scene Setup
@@ -128,10 +88,15 @@ import them into another scene, Pickrunner won't work. Referencing your nodes
 will still work though, and in practice that's usually good enough.
 
 
-Developer Notes
----------------
+Final Notes
+-----------
 
-.. toctree
+If you're looking to contribute or would like the source, please check out
+this page, first.
+
+.. toctree::
     :maxdepth: 2
+    :caption: Developer Guide
 
-    Developer Guide <developer>
+    Documentation And API Reference <developer>
+
