@@ -1,4 +1,4 @@
-global proc shelf_Pickrunner () {
+global proc shelf_pickrunner () {
     global string $gBuffStr;
     global string $gBuffStr0;
     global string $gBuffStr1;
