@@ -123,7 +123,6 @@ will still work though, and in practice that's usually good enough.
 
 ## Final Notes
 
-If you're looking to contribute or would like the source, please check out
-these pages, first.
+If you're looking to contribute or learn more, please check out these pages, first.
 
 <https://pickrunner.readthedocs.io>

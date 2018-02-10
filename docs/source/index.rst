@@ -92,12 +92,10 @@ will still work though, and in practice that's usually good enough.
 Final Notes
 -----------
 
-If you're looking to contribute or would like the source, please check out
-this page, first.
+If you're looking to contribute, please check out this page, first.
 
 .. toctree::
     :maxdepth: 2
-    :caption: Developer Guide
 
     Documentation And API Reference <developer>
 
