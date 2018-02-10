@@ -62,7 +62,7 @@ class MayaBehaviorControl(gui.BehaviorControl):
         attr.setLocked(True)
 
     @staticmethod
-    def get_selection(cls):
+    def get_selection():
         '''list[<pm.general.PyNode>]: The selected objects in the Maya scene.'''
         return pm.selected()
 
@@ -90,7 +90,7 @@ class MayaBehaviorControl(gui.BehaviorControl):
         return value
 
     @staticmethod
-    def get_object_name(cls, obj):
+    def get_object_name(obj):
         '''str: Find the unique-name of the given object.'''
         try:
             return obj.nodeName()

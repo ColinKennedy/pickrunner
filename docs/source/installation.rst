@@ -11,34 +11,96 @@ Download the pickrunner project from online.
     git clone https://github.com/ColinKennedy/pickrunner.git
 
 
-Pickrunner comes with a module file located in the "modules" folder called
-"pickrunner.mod". Just add the full path to the "modules" folder to the
-:obj:`MAYA_MODULE_PATH` environment variable and restart Maya.
+Pickrunner comes with a .mod file located "modules/pickrunner.mod".
+Just add the full path to the `modules` folder to the
+:obj:`MAYA_MODULE_PATH` environment variable.
 
-Pickrunner will build a brand new shelf for you to use its GUI.
+In Windows DOS
 
-The paths listed in :obj:`pickrunner.mod` are all relative to the main folder so, if
-you need to place the :obj:`pickrunner.mod` file someplace else, just make sure to
-replace the relative path `..\` and `../` to wherever you place the other
-files.
+::
+
+    set MAYA_MODULE_PATH=C:\Path\to\pickrunner\modules:%MAYA_MODULE_PATH%
+
+In bash
+
+::
+
+    export MAYA_MODULE_PATH=/Path/to/pickrunner/modules:$MAYA_MODULE_PATH
+
+In tcsh/csh
+
+::
+
+    setenv MAYA_MODULE_PATH /Path/to/pickrunner/modules:$MAYA_MODULE_PATH
+
+Now restart Maya and Pickrunner will have installed a brand new shelf with the GUI tool.
+
+
+.. note ::
+
+    All of the paths listed in pickrunner.mod are relative to the main
+    project folder. So if you need to move pickrunner.mod someplace else,
+    make sure to replace the `..\\` and `../` parts with the absolute path to
+    wherever you placed the pickrunner project folder.
+
 
 Installing Manually
 -------------------
 
-If you don't want to use the module file, no problem. Just do this:
+If you're not a fan of adding a whole extra shelf just for a single button, I
+don't blame you. Pickrunner's installation can be customized but the process
+is more manual than just setting the module file.
 
-1. Put the :obj:`pickrunner` folder located in "scripts/pickrunner" someplace on the
-   :obj:`MAYA_SCRIPT_PATH`
-   - This makes it so that the Pickrunner GUI will load
-2. Add the directory to the "userSetup.py" file onto your :obj:`MAYA_SCRIPT_PATH`.
-   - This step will override your hotkeys on Maya's startup
-3. Place the "pickrunner_icon.png" in the :obj:`XBMLANGPATH` environment variable
-   - Only do this if you want to use the Pickrunner icon(s)
-4. Add these commands to a new shelf button
+
+1. Add the "scripts" folder onto your :obj:`PYTHONPATH` environment variable.
+
+   - Doing this steup will make Pickrunner's GUI load. otherwise,
+     you'll get an ImportError if you try to run the Pickrunner shelf
+     button.
+
+2. Add the directory to Pickrunner's "userSetup.py" file onto your
+   :obj:`PYTHONPATH`.
+
+   - This step will override your hotkeys on Maya's startup so that you can
+     use Pickrunner without the GUI.
+
+3. Add the path to the "pickrunner_icon.png" in the :obj:`XBMLANGPATH` environment variable.
+
+   - Only do this if you want to use the Pickrunner icon / shelf button.
+     Note, you'll need to add "%B" to the end of the directory of "pickrunner_icon.png". See `Autodesk's documentation on the XBMLANGPATH environment variable <https://knowledge.autodesk.com/support/maya/learn-explore/caas/CloudHelp/cloudhelp/2015/ENU/Maya/files/GUID-228CCA33-4AFE-4380-8C3D-18D23F7EAC72-htm.html>`_ for details.
+
+4. Make a new shelf button and add these Python commands onto it.
 
 ::
 
     from pickrunner import mayarunner
     mayarunner.show()
 
-And you're done.
+4b. If you want, use the pickrunner_icon.png file for your new shelf button.
+
+
+And that's it, you're done.
+
+
+Examples
+--------
+
+
+Module Example (Windows)
+++++++++++++++++++++++++
+
+
+::
+
+    set MAYA_MODULE_PATH=C:\Users\korinkite\Dropbox\Private\my_ENV\env_ROOT\python\packages\pickrunner\modules
+
+
+Manual Example (Windows)
+++++++++++++++++++++++++
+
+
+::
+
+    set XBMLANGPATH=C:\Users\korinkite\Dropbox\Private\my_ENV\env_ROOT\python\packages\pickrunner\icons\%B
+    set PYTHONPATH=C:\Users\korinkite\Dropbox\Private\my_ENV\env_ROOT\python\packages\pickrunner\scripts;%PYTHONPATH%
+    set PYTHONPATH=C:\Users\korinkite\Dropbox\Private\my_ENV\env_ROOT\python\packages\pickrunner\integration;%PYTHONPATH%
