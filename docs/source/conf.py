@@ -178,3 +178,8 @@ autodoc_mock_imports = [
     'PySide',
     'Qt',
 ]
+
+import sys
+
+_PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+sys.path.append(os.path.join(_PROJECT_ROOT, 'scripts'))
