@@ -182,7 +182,7 @@ autodoc_mock_imports = [
 import sys
 import os
 
-_PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+_PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 _PROJECT_SOURCE_FOLDER = os.path.join(_PROJECT_ROOT, 'scripts')
 print((_PROJECT_SOURCE_FOLDER))
 raise ValueError(_PROJECT_SOURCE_FOLDER)
