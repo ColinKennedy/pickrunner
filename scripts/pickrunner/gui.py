@@ -86,7 +86,7 @@ class BehaviorControl(object):
         '''Initialize the object and do nothing else.'''
         super(BehaviorControl, self).__init__()
 
-    @classmethod
+    @staticmethod
     @abc.abstractmethod
     def get_selection(cls):
         '''list: The selected objects in the Maya scene.'''
@@ -98,7 +98,7 @@ class BehaviorControl(object):
         '''dict: Any information stored in the given object that can be used.'''
         return dict()
 
-    @classmethod
+    @staticmethod
     @abc.abstractmethod
     def get_object_name(cls, obj):
         '''str: Find the unique-name of the given object.'''
